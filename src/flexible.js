@@ -17,7 +17,7 @@
   var UCversion = ua.match(/U3\/((\d+|\.){5,})/i);
   var isUCHd = UCversion && parseInt(UCversion[1].split('.').join(''), 10) >= 80;
   if (!isIos && !(isAndroid && isAndroid[1] > 534) && !isChrome && !isUCHd && !isX5) {
-    // 如果非iOS, 非Android4.3以上, 非UC内核, 就不执行高清, dpr设为1;
+    // 如果非iOS, 非Android4.3以上, 非UC内核等, 就不执行高清, dpr设为1;
     dpr = 1;
   }
   // 缩放
