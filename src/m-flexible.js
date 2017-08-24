@@ -9,8 +9,6 @@
   var dpr;
   // 缩放
   var scale;
-  // 基准像素
-  var baseFontSize = 100;
 
   if (metaEl) {
     console.warn('将根据已有的meta标签来设置缩放比例');
@@ -58,8 +56,7 @@
     }
     
     // 高清
-    // win.rem = width / 10;
-    win.rem = baseFontSize / 2 * dpr;
+    win.rem = width / 10;
 
     // if (/ZTE U930_TD/.test(ua)) {
     //   win.rem = 1.13 * win.rem;
@@ -70,8 +67,7 @@
     // if (/Android\s+5\.0\.1;\s+MX4\s/.test(ua)) {
     //   win.rem = 1.06382 * win.rem;
     // }
-    // styleEl.innerHTML = "html{font-size:" + win.rem + "px!important;}body{font-size:" + parseInt(12 * (width / 320)) + "px" + style;
-    styleEl.innerHTML = "html{font-size:" + win.rem + "px!important;}body{font-size:" + (12 * dpr) + "px" + style;
+    styleEl.innerHTML = "html{font-size:" + win.rem + "px!important;}body{font-size:" + parseInt(12 * (width / 320)) + "px" + style;
   }
 
   win.addEventListener('resize', function () {
