@@ -4,15 +4,15 @@
  * 自定义设计稿的宽度: designWidth
  */
 ;(function (win, lib, maxWidth, designWidth) {
-  var flexible = lib.flexible || (lib.flexible = {});
-  var doc = win.document;
-  var docEl = doc.documentElement;
+	var flexible = lib.flexible || (lib.flexible = {});
+	var doc = win.document;
+	var docEl = doc.documentElement;
 	var remStyleEl = doc.createElement("style");
-  var tid;
-  // 基准像素
-  var baseFontSize = 100;
-  // 像素比
-  var dpr = win.devicePixelRatio || 1;
+	var tid;
+	// 基准像素
+	var baseFontSize = 100;
+	// 像素比
+	var dpr = win.devicePixelRatio || 1;
 
 	function refreshRem() {
 		var width = docEl.getBoundingClientRect().width;
