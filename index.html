@@ -204,6 +204,39 @@
       font-size: 0.24rem;
       color: #fff;
     }
+
+    .wireframe-list li {
+    	padding: 0.2rem;
+    }
+
+    .wf-box {
+    	display: inline-block;
+    	vertical-align: middle;
+    	border: 2px dotted #00A699;
+    	font-size: 0;
+    	overflow: hidden;
+    }
+    .wf-tiny {
+			width: 0.16rem;
+			height: 0.16rem;
+    }
+    .wf-small {
+			width: 0.32rem;
+			height: 0.32rem;
+    }
+    .wf-base {
+			width: 0.48rem;
+			height: 0.48rem;
+    }
+    .wf-large {
+			width: 0.96rem;
+			height: 0.96rem;
+    }
+    .wf-x-large {
+			width: 1.28rem;
+			height: 1.28rem;
+    }
+
   </style>
 </head>
 <body>
@@ -235,6 +268,7 @@
       <li class="item">文本</li>
       <li class="item">文本</li>
     </ul>
+    <div style="font-size: .16rem;">16px ~ 8pt, 微小的 </div>
     <div style="font-size: .24rem;">24px ~ 12pt, 最小文本说明 </div>
     <div style="font-size: .28rem;">28px ~ 14pt, 页面辅助信息 </div>
     <div style="font-size: .30rem;">30px ~ 15pt, 主标题 </div>
@@ -242,6 +276,25 @@
     <div style="font-size: .34rem;">34px ~ 17pt, 单行列表内，左方标题文字 </div>
     <div style="font-size: .36rem;">36px ~ 18pt, 页面顶部标题，大按钮字体 </div>
     <div style="font-size: .60rem;">60px ~ 30pt, 金额展示 </div>
+
+    <h3>Spacing</h3>
+    <ul class="wireframe-list">
+    	<li>
+    		<div class="wf-box wf-tiny"></div> 8 ~ tiny
+    	</li>
+    	<li>
+    		<div class="wf-box wf-small"></div> 16 ~ tiny
+    	</li>
+    	<li>
+    		<div class="wf-box wf-base"></div> 24 ~ base
+    	</li>
+    	<li>
+    		<div class="wf-box wf-large"></div> 48 ~ large
+    	</li>
+    	<li>
+    		<div class="wf-box wf-x-large"></div> 48 ~ x-large
+    	</li>
+    </ul>
 
     <p>文本段落文本段落文本段落文本段落文本段落</p>
 

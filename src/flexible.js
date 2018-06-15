@@ -1,51 +1,60 @@
-;(function (win, lib) {
+/**
+ * 默认设置设计稿宽度为750，最大宽度为750
+ * 最大宽度: maxWidth
+ * 自定义设计稿的宽度: designWidth
+ */
+;(function (win, lib, maxWidth, designWidth) {
+  var flexible = lib.flexible || (lib.flexible = {});
   var doc = win.document;
   var docEl = doc.documentElement;
-  var flexible = lib.flexible || (lib.flexible = {});
-  var metaEl = doc.querySelector('meta[name="viewport"]');
-  // 像素比
-  var dpr = win.devicePixelRatio || 1;
+	var remStyleEl = doc.createElement("style");
+  var tid;
   // 基准像素
   var baseFontSize = 100;
+  // 像素比
+  var dpr = win.devicePixelRatio || 1;
 
-  var ua = win.navigator.userAgent;
-  var isChrome = win.chrome;
-  // var isAndroid = win.navigator.appVersion.match(/android/gi);
-  var isAndroid = ua.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i);
-  var isIos = win.navigator.appVersion.match(/(iphone|ipad|ipod)/gi);
-  var isX5 = /TBS\/\d+/.test(ua);
-  var UCversion = ua.match(/U3\/((\d+|\.){5,})/i);
-  var isUCHd = UCversion && parseInt(UCversion[1].split('.').join(''), 10) >= 80;
-  if (!isIos && !(isAndroid && isAndroid[1] > 534) && !isChrome && !isUCHd && !isX5) {
-    // 如果非iOS, 非Android4.3以上, 非UC内核等, 就不执行高清, dpr设为1;
-    dpr = 1;
+	function refreshRem() {
+		var width = docEl.getBoundingClientRect().width;
+		maxWidth = maxWidth || 540;
+		width>maxWidth && (width=maxWidth);
+		win.rem = width * baseFontSize / designWidth;
+		remStyleEl.innerHTML = 'html{font-size:' + win.rem + 'px!important;}';
+	}
+
+	if (docEl.firstElementChild) {
+		docEl.firstElementChild.appendChild(remStyleEl);
+	} else {
+		var wrap = doc.createElement("div");
+		wrap.appendChild(remStyleEl);
+		doc.write(wrap.innerHTML);
+		wrap = null;
+	}
+	// 要等 wiewport 设置好后才能执行 refreshRem，不然 refreshRem 会执行2次；
+	refreshRem();
+
+	win.addEventListener("resize", function() {
+    // 防止执行两次
+		clearTimeout(tid); 
+		tid = setTimeout(refreshRem, 300);
+	}, false);
+
+	win.addEventListener("pageshow", function(e) {
+    // 浏览器后退的时候重新计算
+		if (e.persisted) { 
+			clearTimeout(tid);
+			tid = setTimeout(refreshRem, 300);
+		}
+	}, false);
+
+	if (doc.readyState === "complete") {
+		doc.body.style.fontSize = "16px";
+	} else {
+		doc.addEventListener("DOMContentLoaded", function(e) {
+			doc.body.style.fontSize = "16px";
+		}, false);
   }
-  // 缩放
-  var scale = 1 / dpr;
-
-  // 高清
-  var rem = baseFontSize / 2 * dpr;
-
-  if (!metaEl) {
-    metaEl = doc.createElement('meta');
-    metaEl.setAttribute('name', 'viewport');
-    doc.head.appendChild(metaEl);
-  }
-
-  metaEl.setAttribute('content', 'width=device-width,initial-scale=' + scale + ',maximum-scale=' + scale + ',minimum-scale=' + scale + ',user-scalable=no');
-
-  docEl.style.fontSize = rem + 'px';
-  // 设置data-dpr属性，留作的css hack之用
-  docEl.setAttribute('data-dpr', dpr);
-
-  if (doc.readyState === 'complete') {
-    doc.body.style.fontSize = 12 * dpr + 'px';
-  } else {
-    doc.addEventListener('DOMContentLoaded', function (e) {
-      doc.body.style.fontSize = 12 * dpr + 'px';
-    }, false);
-  }
-
+  
   flexible.dpr = win.dpr = dpr;
-  flexible.rem = win.rem = rem;
-})(window, window['lib'] || (window['lib'] = {}));
+  flexible.rem = win.rem;
+})(window, window['lib'] || (window['lib'] = {}), 750, 750);
