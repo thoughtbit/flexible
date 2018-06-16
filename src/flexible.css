@@ -479,12 +479,13 @@ template {
 
 html,
 body {
-  height: 100%;
+  /* 禁止选中文本 */
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 html {
   -webkit-text-size-adjust:none;
-  -ms-text-size-adjust:none;
   text-size-adjust:none;
 }
 
