@@ -32,11 +32,7 @@
 		wrap = null;
 	}
 
-	if (document.readyState !== 'loading') {
-    refreshRem();
-  } else {
-    document.addEventListener('DOMContentLoaded', refreshRem);
-  }
+  refreshRem();
 
 	win.addEventListener('resize', function() {
     // 防止执行两次
