@@ -7,7 +7,7 @@
 	var flexible = lib.flexible || (lib.flexible = {});
 	var doc = win.document;
 	var docEl = doc.documentElement;
-	var remStyleEl = doc.createElement("style");
+	var remStyleEl = doc.createElement('style');
 	var tid;
 	// 基准像素
 	var baseFontSize = 100;
@@ -25,21 +25,25 @@
 	if (docEl.firstElementChild) {
 		docEl.firstElementChild.appendChild(remStyleEl);
 	} else {
-		var wrap = doc.createElement("div");
+		var wrap = doc.createElement('div');
 		wrap.appendChild(remStyleEl);
 		doc.write(wrap.innerHTML);
 		wrap = null;
 	}
-	// 要等 wiewport 设置好后才能执行 refreshRem，不然 refreshRem 会执行2次；
-	refreshRem();
 
-	win.addEventListener("resize", function() {
+	if (document.readyState !== 'loading') {
+    refreshRem();
+  } else {
+    document.addEventListener('DOMContentLoaded', refreshRem);
+  }
+
+	win.addEventListener('resize', function() {
     // 防止执行两次
 		clearTimeout(tid); 
 		tid = setTimeout(refreshRem, 300);
 	}, false);
 
-	win.addEventListener("pageshow", function(e) {
+	win.addEventListener('pageshow', function(e) {
     // 浏览器后退的时候重新计算
 		if (e.persisted) { 
 			clearTimeout(tid);
@@ -47,14 +51,14 @@
 		}
 	}, false);
 
-	if (doc.readyState === "complete") {
-		doc.body.style.fontSize = "16px";
+	if (doc.readyState === 'complete') {
+		doc.body.style.fontSize = '16px';
 	} else {
-		doc.addEventListener("DOMContentLoaded", function(e) {
-			doc.body.style.fontSize = "16px";
+		doc.addEventListener('DOMContentLoaded', function(e) {
+			doc.body.style.fontSize = '16px';
 		}, false);
   }
   
   flexible.dpr = win.dpr = dpr;
   flexible.rem = win.rem;
-})(window, window['lib'] || (window['lib'] = {}), 750, 750);
+})(window, window.lib || (window.lib = {}), 750, 750);
