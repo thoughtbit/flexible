@@ -13,13 +13,14 @@
 	var baseFontSize = 100;
 	// 像素比
 	var dpr = win.devicePixelRatio || 1;
+	var rem = 50;
 
 	function refreshRem() {
 		var width = docEl.getBoundingClientRect().width;
 		maxWidth = maxWidth || 540;
 		width>maxWidth && (width=maxWidth);
-		win.rem = width * baseFontSize / designWidth;
-		remStyleEl.innerHTML = 'html{font-size:' + win.rem + 'px!important;}';
+		rem = width * baseFontSize / designWidth;
+		remStyleEl.innerHTML = 'html{font-size:' + rem + 'px!important;}';
 	}
 
 	if (docEl.firstElementChild) {
@@ -60,5 +61,5 @@
   }
   
   flexible.dpr = win.dpr = dpr;
-  flexible.rem = win.rem;
+  flexible.rem = win.rem = rem;
 })(window, window.lib || (window.lib = {}), 750, 750);
